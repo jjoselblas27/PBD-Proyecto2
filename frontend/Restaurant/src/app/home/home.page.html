@@ -1,9 +1,50 @@
 <ion-header>
+  <!-- 
+  boton para el login
+
+  <ion-buttons slot="end">
+    <ion-button routerLink="/home/users"><ion-icon name="create"></ion-icon></ion-button>
+  </ion-buttons>
+  -->
+
+
   <ion-toolbar>
     <ion-title>Home</ion-title>
   </ion-toolbar>
+
 </ion-header>
 
 <ion-content>
+  <h2>ICHIRAKU</h2>
+
+  <img src="http://www.bandaigames.channel.or.jp/list/naruto_storm2/images/img/sato/img_ichiraku01.jpg" alt="imagen restaurante">
+
+  <p> <b>tabla con los comentarios</b></p>
+  <p>Tendra 2 columnas adicionales una para editarlo y otra para borrarlo. NOta: solo podra editar y/o borrar su propio comentario</p> 
+  <p>Posible implementacion: hacer un nuevo servicio de get usuarios pero que solo recib(id, nombre, imagen de perfil) para no desperdiciarlos.</p>
+  <ion-list>
+    <ion-item *ngFor = "let coment of Comentarios">
+      <ion-avatar>
+        <img src="https://img1.freepng.es/20180420/csw/kisspng-computer-icons-silhouette-user-profile-5ada934a1a7c95.1647956315242739941085.jpg" alt="imagen de usuario">
+      </ion-avatar>
+      <ion-label >
+        <h3>{{coment.comentario}}</h3>
+        <p>{{coment.id_user}}</p>
+      </ion-label> 
+    </ion-item>
+  </ion-list>
+
+
+  <p><b>Tabla con las ubicaciones</b></p>
+  <p>Posible implementacion: poner su distrito en una tabla y que nosotros busquemos por el si esta o no disponible</p>
+  <ion-list>
+    <ion-item *ngFor = "let zonas of zonasReparto">
+      <ion-label >
+        <h3>{{zonas.distrito}}</h3>
+        <p>{{zonas.disponibilidad}}</p>
+      </ion-label> 
+    </ion-item>
+  </ion-list>
+
 
 </ion-content>

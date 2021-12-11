@@ -81,37 +81,6 @@ app.post('/register', function(req, res){
 });
 
 
-//REGISTRO DE RECLAMOS 
-app.post('/reclamos', function(req, res){
-   // Step 0: Definir la conexion a la BD
-    var connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'cliente',
-    password: '123456789',
-    database: 'restaurant'
-  });
-
-  // Step 1: Establecer la conexion
-  connection.connect();
-
-  // Step 2: Mandar el query
-  var myQuery = " INSERT INTO reclamos (nombre, apellido_p, apellido_m, direccion, tipo_documento, documento, telefono, email, edad, reclamo, modified_date, created_date) " +
-                " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW()) ";
-  var myValues = [req.body.nombre, req.body.apellido_p, req.body.apellido_m, req.body.direccion, req.body.tipo_documento, req.body.documento, req.body.telefono, req.body.email, req.body.edad, req.body.reclamo];
-  
-  connection.query(myQuery, myValues, function(error, results, fields){
-    // Ya tengo el resultado del query en `results`. Si hay algun error, llegará en `error`
-    if (error) throw error;
-    
-    // Step 3: Procesar el resultado de la BD
-    res.send(results);
-
-    // Step 4: Cerrar la conexion
-    connection.end();
-  });
-});
-
-
 //Update Datos del Usuario
 app.put('/usuario/:id_user', function(req, res){
 //Step 0: Definir la conexion a la BD
@@ -163,7 +132,9 @@ connection.connect();
   });
 });
 
-app.post('/comentarios_new', function(req,res){
+
+//nuevo comentario
+app.post('/comentarios', function(req,res){
   var connection = mysql.createConnection({
     host: 'localhost',
     user: 'cliente',
@@ -189,7 +160,6 @@ app.post('/comentarios_new', function(req,res){
 
 })
 
-
 // Mostrar Comentarios del Usuario:
 app.get('/comentarios', function(req, res){
     var connection = mysql.createConnection({
@@ -201,7 +171,7 @@ app.get('/comentarios', function(req, res){
 
     connection.connect();
 
-    var myQuery = " SELECT id_comentario, id_user, puntuacion, comentario, modified_date, created_date FROM comentarios WHERE 1 = 1 ";
+    var myQuery = " SELECT id_comentario, id_user, puntuacion, comentario, modified_date, created_date FROM comentarios";
     var myValues = [];
 
     connection.query(myQuery, myValues, function(error, results, fields){
@@ -213,9 +183,8 @@ app.get('/comentarios', function(req, res){
     
         // Step 4: Cerrar la conexion
         connection.end();
-      });
     });
-
+});
 
 //Update Comentario cuando esta logeado
 app.put('/comentarios/:id_comentario', function(req, res){
@@ -254,6 +223,101 @@ app.put('/comentarios/:id_comentario', function(req, res){
   });
 });
 
+//DELETE comentarios
+app.delete('/Comentarios/:id_comentario', function(req,res){
+  // Step 0: Definir la conexion a la BD
+  var connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'cliente',
+    password: '123456789',
+    database: 'restaurant'
+  });
+
+  // Step 1: Establecer la conexion
+  connection.connect();
+
+  // Step 2: Mandar el query
+  var myQuery = "DELETE FROM comentarios "+
+                " WHERE id_comentario = ?";
+        
+  
+  var myValues = [req.params.id_comentario];
+  
+  connection.query(myQuery, myValues, function(error, results, fields){
+    // Ya tengo el resultado del query en `results`. Si hay algun error, llegará en `error`
+    if (error) throw error;
+    
+    // Step 3: Procesar el resultado de la BD
+    res.send(results);
+
+    // Step 4: Cerrar la conexion
+    connection.end();
+  });
+
+})
+
+
+//Mostrar las zonas de reparto
+app.get('/zonas_reparto', function(req,res){
+  // Step 0: Definir la conexion a la BD
+  var connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'cliente',
+    password: '123456789',
+    database: 'restaurant'
+  });
+
+  // Step 1: Establecer la conexion
+  connection.connect();
+
+  // Step 2: Mandar el query
+  var myQuery = " SELECT id_zona, distrito, disponibilidad FROM zonas_reparto"; 
+  var myValues = [];      
+    
+  connection.query(myQuery, myValues, function(error, results, fields){
+    // Ya tengo el resultado del query en `results`. Si hay algun error, llegará en `error`
+    if (error) throw error;
+    
+    // Step 3: Procesar el resultado de la BD
+    res.send(results);
+
+    // Step 4: Cerrar la conexion
+    connection.end();
+  });
+
+})
+
+
+
+//REGISTRO DE RECLAMOS 
+app.post('/reclamos', function(req, res){
+  // Step 0: Definir la conexion a la BD
+   var connection = mysql.createConnection({
+   host: 'localhost',
+   user: 'cliente',
+   password: '123456789',
+   database: 'restaurant'
+ });
+
+ // Step 1: Establecer la conexion
+ connection.connect();
+
+ // Step 2: Mandar el query
+ var myQuery = " INSERT INTO reclamos (nombre, apellido_p, apellido_m, direccion, tipo_documento, documento, telefono, email, edad, reclamo, modified_date, created_date) " +
+               " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW()) ";
+ var myValues = [req.body.nombre, req.body.apellido_p, req.body.apellido_m, req.body.direccion, req.body.tipo_documento, req.body.documento, req.body.telefono, req.body.email, req.body.edad, req.body.reclamo];
+ 
+ connection.query(myQuery, myValues, function(error, results, fields){
+   // Ya tengo el resultado del query en `results`. Si hay algun error, llegará en `error`
+   if (error) throw error;
+   
+   // Step 3: Procesar el resultado de la BD
+   res.send(results);
+
+   // Step 4: Cerrar la conexion
+   connection.end();
+ });
+});
 
 //Tabla de Pedidos
 app.post('/pedido_online', function(req, res){
@@ -287,38 +351,6 @@ app.post('/pedido_online', function(req, res){
 });
 
 
-//DELETE comentarios
-app.delete('/deleteComentarios', function(req,res){
-  // Step 0: Definir la conexion a la BD
-  var connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'cliente',
-    password: '123456789',
-    database: 'restaurant'
-  });
-
-  // Step 1: Establecer la conexion
-  connection.connect();
-
-  // Step 2: Mandar el query
-  var myQuery = "DELETE FROM comentarios "+
-                " WHERE id_comentario = ? AND id_user = ?";
-        
-  
-  var myValues = [ req.body.id_comentario, req.body.id_user];
-  
-  connection.query(myQuery, myValues, function(error, results, fields){
-    // Ya tengo el resultado del query en `results`. Si hay algun error, llegará en `error`
-    if (error) throw error;
-    
-    // Step 3: Procesar el resultado de la BD
-    res.send(results);
-
-    // Step 4: Cerrar la conexion
-    connection.end();
-  });
-
-})
 
 
 //Registro de nueva reserva
@@ -388,35 +420,6 @@ app.delete('/reserva/:id_user', function(req,res){
 })
 
 
-//Mostrar las zonas de reparto
-app.get('/zonas_reparto', function(req,res){
-  // Step 0: Definir la conexion a la BD
-  var connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'cliente',
-    password: '123456789',
-    database: 'restaurant'
-  });
-
-  // Step 1: Establecer la conexion
-  connection.connect();
-
-  // Step 2: Mandar el query
-  var myQuery = " SELECT id_zona, distrito, disponibilidad FROM zonas_reparto WHERE 1 = 1; "; 
-  var myValues = [];      
-    
-  connection.query(myQuery, myValues, function(error, results, fields){
-    // Ya tengo el resultado del query en `results`. Si hay algun error, llegará en `error`
-    if (error) throw error;
-    
-    // Step 3: Procesar el resultado de la BD
-    res.send(results);
-
-    // Step 4: Cerrar la conexion
-    connection.end();
-  });
-
-})
 
 
 // Mostrar todos los platos de la carta con sus precios 
