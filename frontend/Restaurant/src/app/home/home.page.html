@@ -1,25 +1,27 @@
 <ion-header>
-  <!-- 
-  boton para el login
-
-  <ion-buttons slot="end">
-    <ion-button routerLink="/home/users"><ion-icon name="create"></ion-icon></ion-button>
-  </ion-buttons>
-  -->
-
-
   <ion-toolbar>
-    <ion-title>Home</ion-title>
+
+    <ion-buttons slot="end" *ngIf = "!getId()">
+      <ion-button routerLink="login"><ion-icon name="log-in"></ion-icon></ion-button>
+    </ion-buttons>
+
+    <!--  Dirigira al perfil de la persona donde mostrara sus datos y se mostrara un boton de logout-->
+    <ion-buttons slot="end" *ngIf = "getId()">
+      <ion-button ><ion-icon name="person"></ion-icon></ion-button>
+    </ion-buttons>
+
+    <ion-title>ICHIRAKU</ion-title>
   </ion-toolbar>
 
 </ion-header>
 
 <ion-content>
-  <h2>ICHIRAKU</h2>
-
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">ICHIRAKU</ion-title>
+    </ion-toolbar>
+  </ion-header>
   <img src="http://www.bandaigames.channel.or.jp/list/naruto_storm2/images/img/sato/img_ichiraku01.jpg" alt="imagen restaurante">
-
-  <p> <b>tabla con los comentarios</b></p>
 
  <!--
   Posible implementacion: hacer un nuevo servicio de get usuarios pero que solo recib(id, nombre, imagen de perfil) para no desperdiciarlos.</p>
@@ -27,6 +29,7 @@
  -->
 
   <ion-list>
+    <h2>Comentarios</h2>
     <ion-item *ngFor = "let coment of Comentarios">
       <ion-avatar>
         <img src="https://img1.freepng.es/20180420/csw/kisspng-computer-icons-silhouette-user-profile-5ada934a1a7c95.1647956315242739941085.jpg" alt="imagen de usuario">
@@ -34,25 +37,30 @@
       <ion-label>
         <p>Nombre usuario</p>
         <h3>{{coment.comentario}}</h3>
-        <p>{{coment.puntuacion}}</p>
-        <section *ngIf = "Comentarios">
+        <p>puntuacion: {{coment.puntuacion}}</p>
+
+        <section *ngIf = "showComent(coment.id_user)">
           <ion-button color="success" [routerLink]="['comentarios/edit', coment.id_comentario]" >Editar</ion-button>
           <ion-button color="danger" (click) = "DeleteComentario(coment.id_comentario)">Eliminar</ion-button>
         </section>
       </ion-label> 
     </ion-item>
-    <ion-button routerLink = "comentarios/new" >Agregar un comentario</ion-button>
+    <ion-item *ngIf = "getId()" >
+        <ion-button routerLink = "comentarios/new" >Agregar un comentario</ion-button>
+    </ion-item>
   </ion-list>
 
-
-  <p><b>Tabla con las ubicaciones</b></p>
-
-  <p>Posible implementacion: poner su distrito en una tabla y que nosotros busquemos por el si esta o no disponible</p>
   <ion-list>
+    <H2>Encuentranos:</H2>
     <ion-item *ngFor = "let zonas of zonasReparto">
       <ion-label >
         <h3>{{zonas.distrito}}</h3>
-        <p>{{zonas.disponibilidad}}</p>
+        <p>{{zonas.disponibilidad}} </p>
+        <!-- 
+          No funciona.
+         < <div *ngIf="zonas.rdisponibilidad; else elseBlock"> <ion-icon color = "success"></ion-icon></div>
+          <ng-template #elseBlock> <ion-icon color = "danger"></ion-icon> </ng-template>
+        -->
       </ion-label> 
     </ion-item>
   </ion-list>

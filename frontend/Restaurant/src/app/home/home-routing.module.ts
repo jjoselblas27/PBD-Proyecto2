@@ -15,6 +15,10 @@ const routes: Routes = [
   {
     path: 'comentarios/edit/:id_comentario',
     loadChildren: () => import('../comentarios/edit/edit.module').then( m => m.EditPageModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('../login/login.module').then( m => m.LoginPageModule)
   }
 ];
 

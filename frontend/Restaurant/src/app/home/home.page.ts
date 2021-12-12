@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../_service/auth.service';
 import { UsersService } from '../_service/users.service';
 
 @Component({
@@ -9,9 +10,12 @@ import { UsersService } from '../_service/users.service';
 })
 export class HomePage implements OnInit {
 
+  
   constructor(
     private usersService: UsersService,
-    private activatedRoute: ActivatedRoute
+    public authService: AuthService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) { }
 
   Comentarios:any[];
@@ -34,11 +38,26 @@ export class HomePage implements OnInit {
     this.usersService.DeleteComentarios(id_comentario).subscribe(
       response =>{
         console.log(response);
+
+        //Problema recargar la pagina manualmente.
       },
       error => {
         console.error(error);
       }
     );
+  }
+
+  showComent(id:any){
+    if(this.authService.id_user == id){
+      return true;
+    }
+    return false;
+  }
+  getId(){
+    return  this.authService.id_user;
+  }
+  Logout(){
+    this.authService.logout();
   }
 
 }

@@ -24,6 +24,8 @@ export class NewPage implements OnInit {
         comentario: [''],
         puntuacion: [],
       });
+      
+    console.log(authService.id_user);
   }
 
   ngOnInit() {
