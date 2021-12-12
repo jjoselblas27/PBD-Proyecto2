@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>New Comentario</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <form [formGroup]="NewUser" (ngSubmit)="addUser(ComentarioNew.value)">
+          <ion-item>
+            <ion-label position="floating">Username</ion-label>
+            <ion-input formControlName="Username" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Password</ion-label>
+            <ion-input formControlName="password" type="password"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Correo</ion-label>
+            <ion-input formControlName="correo" type="email"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Telefono</ion-label>
+            <ion-input formControlName="number" type="telefono"></ion-input>
+          </ion-item>
+          <ion-row>
+            <ion-col class="ion-text-center">
+              <ion-button expand="full" type="submit">Create</ion-button>
+            </ion-col>
+          </ion-row>
+          
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

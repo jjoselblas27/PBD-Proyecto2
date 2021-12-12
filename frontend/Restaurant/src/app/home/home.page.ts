@@ -30,4 +30,15 @@ export class HomePage implements OnInit {
     })
   }
 
+  DeleteComentario(id_comentario:any){
+    this.usersService.DeleteComentarios(id_comentario).subscribe(
+      response =>{
+        console.log(response);
+      },
+      error => {
+        console.error(error);
+      }
+    );
+  }
+
 }

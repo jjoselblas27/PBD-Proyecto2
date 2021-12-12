@@ -4,6 +4,6 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class AuthService {
-
+  id_user = 1; //por ahora este. MODIFICAR
   constructor() { }
 }

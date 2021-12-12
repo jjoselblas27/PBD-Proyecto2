@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>edit</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+<ion-grid>
+  <ion-row>
+    <ion-col>
+      <form [formGroup]="ComentEdit" (ngSubmit)="EditComentario(ComentEdit.value)">
+        <ion-item>
+          <ion-label position="floating">Comentario</ion-label>
+          <ion-input formControlName="comentario" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Puntuacion</ion-label>
+          <ion-input formControlName="puntuacion" type="number"></ion-input>
+        </ion-item>
+        <ion-row>
+          <ion-col class="ion-text-center">
+            <ion-button expand="full" type="submit">Create</ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="ion-text-center">
+            <ion-button color = "danger" routerLink="/home" >No</ion-button>
+          </ion-col>
+        </ion-row>
+        
+      </form>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+</ion-content>

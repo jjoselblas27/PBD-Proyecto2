@@ -20,35 +20,54 @@ app.post('/login', function(req, res){
     password: '123456789',
     database: 'restaurant'
   });
-
-  // Step 1: Establecer la conexion
   connection.connect();
-
-  // Step 2: Mandar el query
   var myQuery = " SELECT id_user, username " +
                 " FROM usuarios " +
                 " WHERE username = ? " +
                 " AND password = MD5(?) ";
-  
   var myValues = [ req.body.username, req.body.password ];
   
   connection.query(myQuery, myValues, function(error, results, fields){
     // Ya tengo el resultado del query en `results`. Si hay algun error, llegará en `error`
     if (error) throw error;
-    
-    // Step 3: Procesar el resultado de la BD
     res.send(results[0]);
-
-    //pruebas:
-
-
-
-    // Step 4: Cerrar la conexion
     connection.end();
   });
 });
+/*
+//Get usuarios: id, nombre, imagen de perfil, 
+//MOTIVO: solo quiero para los comentarios los usuarios que comentaron no los demas por ese motivo
+//Se le enviara por el body los id's de los usuarios para que sean menos busquedas.
+//Problema: como seleccionar un rango de elementos?
+app.get('/usuarios', function(req,res){
+  var connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'cliente',
+    password: '123456789',
+    database: 'restaurant'
+  });
+  connection.connect();
 
-
+  myQuery = "SELECT id_user, username, imagen_perfil " +
+            "FROM usuarios " +
+            " WHERE 1 = 1 ";
+  var myValues = [];
+  //No se exactamente cuantos elementos seran.
+  if(req.body.id_user1){
+    myQuery += "OR id_user = ? ";
+    myValues.append(req.body.id_user1);
+  }
+  if(req.body.id_user1){
+    myQuery += "OR id_user = ? ";
+    myValues.append(req.body.id_user1);
+  }
+  connection.query(myQuery,myValues, function(error, results, fields){
+    if(error) throw error;
+    res.send(results);
+    connection.end();
+  })
+})
+*/
 //registro de nuevos usuarios
 app.post('/register', function(req, res){
   // Step 0: Definir la conexion a la BD
@@ -132,6 +151,8 @@ connection.connect();
   });
 });
 
+//Obtencion de los usuarios.
+
 
 //nuevo comentario
 app.post('/comentarios', function(req,res){
@@ -186,6 +207,31 @@ app.get('/comentarios', function(req, res){
     });
 });
 
+app.get('/comentarios/:id_comentario', function(req, res){
+  var connection = mysql.createConnection({
+      host: 'localhost',
+      user: 'cliente',
+      password: '123456789',
+      database: 'restaurant'
+  });
+
+  connection.connect();
+
+  var myQuery = " SELECT id_comentario, id_user, puntuacion, comentario, modified_date, created_date "
+                + " FROM comentarios WHERE id_comentario = ? ";
+  var myValues = [req.params.id_comentario];
+
+  connection.query(myQuery, myValues, function(error, results, fields){
+      // Ya tengo el resultado del query en `results`. Si hay algun error, llegará en `error`
+      if (error) throw error;
+      
+      // Step 3: Procesar el resultado de la BD
+      res.send(results[0]);
+  
+      // Step 4: Cerrar la conexion
+      connection.end();
+  });
+});
 //Update Comentario cuando esta logeado
 app.put('/comentarios/:id_comentario', function(req, res){
   //Step 0: Definir la conexion a la BD
@@ -200,13 +246,16 @@ app.put('/comentarios/:id_comentario', function(req, res){
   connection.connect();
  // Step 2: Mandar el query
   var myQuery = " UPDATE comentarios SET modified_date = NOW() ";
-  var myValues = [ req.body.id_comentario, req.body.id_user];
+  var myValues = [ ];
   
   if (req.body.comentario){
     myQuery += " , comentario = ? ";
     myValues.push(req.body.comentario);
   }
-
+  if(req.body.puntuacion){
+    myQuery += " , puntuacion = ? ";
+    myValues.push(req.body.puntuacion);
+  }
 
   myQuery += " WHERE id_comentario = ? "
   myValues.push(req.params.id_comentario);
