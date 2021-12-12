@@ -12,9 +12,15 @@ export class UsersService {
   getComentarios(){
     return this.http.get<any>('http://localhost:3000/comentarios');
   }
+
+  getComentarioById(coment_id:any){
+    return this.http.get<any>(`http://localhost:3000/comentarios/${coment_id}`);
+  }
+
   editComentarios(coment_id:any, coment_edit:any){
     return this.http.put<any>(`http://localhost:3000/comentarios/${coment_id}`,coment_edit);
   }
+  
   DeleteComentarios(coment_id:any){
     return this.http.delete<any>(`http://localhost:3000/comentarios/${coment_id}`);
   }
