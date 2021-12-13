@@ -1,10 +1,10 @@
 
 <ion-tabs>
 
-  <ion-tab-bar slot="bottom">
+  <ion-tab-bar slot="bottom" *ngIf = "authService.id_user" >
 
     <ion-tab-button tab="home">
-      <ion-icon name="triangle"></ion-icon>
+      <ion-icon name="home-outline"></ion-icon>
       <ion-label>Tab 1</ion-label>
     </ion-tab-button>
 

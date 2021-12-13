@@ -1,15 +1,11 @@
 <ion-header>
   <ion-toolbar>
-
-    <ion-buttons slot="end" *ngIf = "!getId()">
-      <ion-button routerLink="login"><ion-icon name="log-in"></ion-icon></ion-button>
-    </ion-buttons>
-
-    <!--  Dirigira al perfil de la persona donde mostrara sus datos y se mostrara un boton de logout-->
+    <!--
+     Dirigira al perfil de la persona donde mostrara sus datos y se mostrara un boton de logout
     <ion-buttons slot="end" *ngIf = "getId()">
       <ion-button ><ion-icon name="person"></ion-icon></ion-button>
     </ion-buttons>
-
+    -->
     <ion-title>ICHIRAKU</ion-title>
   </ion-toolbar>
 
@@ -45,7 +41,7 @@
         </section>
       </ion-label> 
     </ion-item>
-    <ion-item *ngIf = "getId()" >
+    <ion-item >
         <ion-button routerLink = "comentarios/new" >Agregar un comentario</ion-button>
     </ion-item>
   </ion-list>

@@ -53,9 +53,7 @@ export class HomePage implements OnInit {
     }
     return false;
   }
-  getId(){
-    return  this.authService.id_user;
-  }
+
   Logout(){
     this.authService.logout();
   }
