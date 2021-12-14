@@ -34,40 +34,8 @@ app.post('/login', function(req, res){
     connection.end();
   });
 });
-/*
-//Get usuarios: id, nombre, imagen de perfil, 
-//MOTIVO: solo quiero para los comentarios los usuarios que comentaron no los demas por ese motivo
-//Se le enviara por el body los id's de los usuarios para que sean menos busquedas.
-//Problema: como seleccionar un rango de elementos?
-app.get('/usuarios', function(req,res){
-  var connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'cliente',
-    password: '123456789',
-    database: 'restaurant'
-  });
-  connection.connect();
 
-  myQuery = "SELECT id_user, username, imagen_perfil " +
-            "FROM usuarios " +
-            " WHERE 1 = 1 ";
-  var myValues = [];
-  //No se exactamente cuantos elementos seran.
-  if(req.body.id_user1){
-    myQuery += "OR id_user = ? ";
-    myValues.append(req.body.id_user1);
-  }
-  if(req.body.id_user1){
-    myQuery += "OR id_user = ? ";
-    myValues.append(req.body.id_user1);
-  }
-  connection.query(myQuery,myValues, function(error, results, fields){
-    if(error) throw error;
-    res.send(results);
-    connection.end();
-  })
-})
-*/
+
 //registro de nuevos usuarios
 app.post('/register', function(req, res){
   // Step 0: Definir la conexion a la BD
@@ -192,7 +160,12 @@ app.get('/comentarios', function(req, res){
 
     connection.connect();
 
-    var myQuery = " SELECT id_comentario, id_user, puntuacion, comentario, modified_date, created_date FROM comentarios";
+    //AGREGAR la imagen de perfil
+    var myQuery = " SELECT comentarios.id_comentario, comentarios.id_user, comentarios.puntuacion, "
+                  + " comentarios.comentario, comentarios.modified_date, "
+                  + " usuarios.id_user, usuarios.username "
+                  + " FROM comentarios, usuarios "
+                  + " WHERE usuarios.id_user = comentarios.id_user";
     var myValues = [];
 
     connection.query(myQuery, myValues, function(error, results, fields){

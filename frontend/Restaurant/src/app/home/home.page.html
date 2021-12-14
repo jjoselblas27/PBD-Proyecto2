@@ -17,12 +17,10 @@
       <ion-title size="large">ICHIRAKU</ion-title>
     </ion-toolbar>
   </ion-header>
-  <img src="http://www.bandaigames.channel.or.jp/list/naruto_storm2/images/img/sato/img_ichiraku01.jpg" alt="imagen restaurante">
 
- <!--
-  Posible implementacion: hacer un nuevo servicio de get usuarios pero que solo recib(id, nombre, imagen de perfil) para no desperdiciarlos.</p>
-  Despues de que se establesca el usuario poner condicionales para que solo vean el edit y delete si estan logeados y son sus propios comentarios
- -->
+  <!-- TEMPORAL -->
+  <img src="https://i.pinimg.com/564x/b7/2a/b5/b72ab5982a2ae32b47aa76ab0b6992d6.jpg" alt="imagen restaurante">
+
 
   <ion-list>
     <h2>Comentarios</h2>
@@ -31,7 +29,7 @@
         <img src="https://img1.freepng.es/20180420/csw/kisspng-computer-icons-silhouette-user-profile-5ada934a1a7c95.1647956315242739941085.jpg" alt="imagen de usuario">
       </ion-avatar>
       <ion-label>
-        <p>Nombre usuario</p>
+        <p>{{coment.username}} </p>
         <h3>{{coment.comentario}}</h3>
         <p>puntuacion: {{coment.puntuacion}}</p>
 
@@ -50,13 +48,15 @@
     <H2>Encuentranos:</H2>
     <ion-item *ngFor = "let zonas of zonasReparto">
       <ion-label >
+
         <h3>{{zonas.distrito}}</h3>
-        <p>{{zonas.disponibilidad}} </p>
-        <!-- 
-          No funciona.
-         < <div *ngIf="zonas.rdisponibilidad; else elseBlock"> <ion-icon color = "success"></ion-icon></div>
-          <ng-template #elseBlock> <ion-icon color = "danger"></ion-icon> </ng-template>
-        -->
+        <ion-buttons slot="end" *ngIf = "zonas.disponibilidad != 'Si'">
+          <ion-button ><ion-icon name="close"></ion-icon></ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end" *ngIf = "zonas.disponibilidad == 'Si'">
+          <ion-button ><ion-icon name="checkmark"></ion-icon></ion-button>
+        </ion-buttons>
+
       </ion-label> 
     </ion-item>
   </ion-list>
