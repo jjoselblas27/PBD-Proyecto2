@@ -35,5 +35,14 @@ export class UsersService {
   getZonasReparto(){
     return this.http.get<any>('http://localhost:3000/zonas_reparto');
   }
+  
+  getUsuarioById(id_user: any) {
+    return this.http.get<any>(`http://localhost:3000/usuarios/${id_user}`);
+  }
+
+  getUsuarios() {
+    return this.http.get<any>('http://localhost:3000/usuarios');
+  }  
+  
 
 }
