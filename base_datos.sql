@@ -7,6 +7,7 @@ CREATE TABLE usuarios(
 	password varchar(255) NOT NULL,
 	correo varchar(255),
 	telefono int,
+	url varchar(255),
     created_date DATETIME NOT NULL,
     modified_date DATETIME NOT NULL,
     PRIMARY KEY(id_user)
@@ -87,10 +88,10 @@ CREATE TABLE zonas_reparto(
 
 
 --pruebas--
-INSERT INTO usuarios(id_user, username, password, correo, telefono, created_date, modified_date) 
-VALUES (1,'JUAN', MD5('12345'), NULL, NULL, NOW(), NOW());
-INSERT INTO usuarios(id_user, username, password, correo, telefono, created_date, modified_date) 
-VALUES (2,'JOSE', MD5('54321'), NULL, NULL, NOW(), NOW());
+INSERT INTO usuarios(id_user, username, password, correo, telefono, url,  created_date, modified_date) 
+VALUES (1,'JUAN', MD5('12345'), 'juan@utec.edu.pe', 987664354, 'figures/1639570501577.png', NOW(), NOW());
+INSERT INTO usuarios(id_user, username, password, correo, telefono, url,  created_date, modified_date) 
+VALUES (2,'JOSE', MD5('54321'), 'jose@sesd.com', 987564354, 'figures/1639570407448.png', NOW(), NOW());
 
 INSERT INTO comentarios(id_comentario, id_user, puntuacion, comentario, modified_date, created_date)
 VALUES (1,1,5,"maso el restaurante :V", NOW(), NOW());
