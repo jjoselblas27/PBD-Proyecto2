@@ -376,7 +376,7 @@ app.post('/pedido_online', function(req, res){
 
 
 //Registro de nueva reserva
-app.post('/reservaciones_new', function(req, res){
+app.post('/reservaciones', function(req, res){
   // Step 0: Definir la conexion a la BD
   var connection = mysql.createConnection({
      host: 'localhost',
@@ -389,12 +389,12 @@ app.post('/reservaciones_new', function(req, res){
  connection.connect();
 
  // ;Step 2: Mandar el query
- var myQuery =   " INSERT INTO reservaciones (nombre, " +
+ var myQuery =   " INSERT INTO reservaciones (id_user,nombre, " +
                  " n_personas, tipo_mesa, hora_reservacion, fecha, correo," +
                  " telefono, created_date, modified_date ) " +
-                 " VALUES (?,?,?,?,?,?,?, NOW(), NOW()); ";
+                 " VALUES (?,?,?,?,?,?,?,?, NOW(), NOW()); ";
 
- var myValues = [req.body.nombre, req.body.n_personas, req.body.tipo_mesa, req.body.hora_reservacion, req.body.fecha, req.body.correo, req.body.telefono];
+ var myValues = [req.body.id_user,req.body.nombre, req.body.n_personas, req.body.tipo_mesa, req.body.hora_reservacion, req.body.fecha, req.body.correo, req.body.telefono];
 
  connection.query(myQuery, myValues, function(error, results, fields){
      // Ya tengo el resultado del query en `results`. Si hay algun error, llegará en `error`
@@ -410,7 +410,7 @@ app.post('/reservaciones_new', function(req, res){
 
 
 //DELETE reserva
-app.delete('/reserva/:id_user', function(req,res){
+app.delete('/reservaciones/:id_user', function(req,res){
   // Step 0: Definir la conexion a la BD
   var connection = mysql.createConnection({
     host: 'localhost',

@@ -15,7 +15,12 @@ const routes: Routes = [
   {
     path: 'comentarios/edit/:id_comentario',
     loadChildren: () => import('../comentarios/edit/edit.module').then( m => m.EditPageModule)
+  },
+  {
+    path: 'reservaciones/new',
+    loadChildren: () => import('../reservaciones/reservaciones-new/reservaciones-new.module').then( m => m.ReservacionesNewPageModule)
   }
+  
 ];
 
 @NgModule({

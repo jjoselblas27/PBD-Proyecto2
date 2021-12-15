@@ -24,6 +24,7 @@ CREATE TABLE menu(
 
 CREATE TABLE reservaciones (
 	id_reservacion int NOT NULL AUTO_INCREMENT,
+	id_user int NOT NULL,
 	nombre varchar(50) NOT NULL,
 	n_personas int NOT NULL,
 	tipo_mesa ENUM('Ventana - Piso1','Ventana - Piso2','Dentro - Piso1','Dentro - Piso2') NOT NULL,
@@ -33,7 +34,8 @@ CREATE TABLE reservaciones (
 	telefono int,
 	created_date datetime,
 	modified_date datetime,
-	PRIMARY KEY (id_reservacion)
+	PRIMARY KEY (id_reservacion),
+	FOREIGN KEY (id_user) REFERENCES usuarios(id_user)
 );
 
 CREATE TABLE pedidos_online(
@@ -104,15 +106,15 @@ VALUES(5, "Ramen", "Sopa", 20.00, NOW(), NOW());
 INSERT INTO menu(plato_id, name_plato, tipo_plato, price, created_date, modified_date)
 VALUES(6, "Yakitori","brocheta", 40.00, NOW(), NOW());
 
-INSERT INTO zonas_reparto(id_zona, distrito, disponibilidad, modified_Date, created_Date)
+INSERT INTO zonas_reparto(id_zona, distrito, disponibilidad, created_date, modified_date)
 VALUES (1,'Callao','Si',NOW(),NOW());
-INSERT INTO zonas_reparto(id_zona, distrito, disponibilidad, modified_Date, created_Date)
+INSERT INTO zonas_reparto(id_zona, distrito, disponibilidad, created_date, modified_date)
 VALUES (2,'Comas','Si',NOW(),NOW());
-INSERT INTO zonas_reparto(id_zona, distrito, disponibilidad, modified_Date, created_Date)
+INSERT INTO zonas_reparto(id_zona, distrito, disponibilidad, created_date, modified_date)
 VALUES (3, 'Carabayllo','Si',NOW(),NOW());
-INSERT INTO zonas_reparto(id_zona, distrito, disponibilidad, modified_Date, created_Date)
+INSERT INTO zonas_reparto(id_zona, distrito, disponibilidad, created_date, modified_date)
 VALUES (4, 'San Martin de Porres','Si',NOW(),NOW());
-INSERT INTO zonas_reparto(id_zona, distrito, disponibilidad, modified_Date, created_Date)
+INSERT INTO zonas_reparto(id_zona, distrito, disponibilidad, created_date, modified_date)
 VALUES (5, 'Los Olivos','No',NOW(),NOW());
 
 
