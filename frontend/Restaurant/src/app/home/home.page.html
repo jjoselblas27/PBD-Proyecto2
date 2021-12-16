@@ -1,11 +1,5 @@
 <ion-header>
   <ion-toolbar>
-    <!--
-     Dirigira al perfil de la persona donde mostrara sus datos y se mostrara un boton de logout
-    <ion-buttons slot="end" *ngIf = "getId()">
-      <ion-button ><ion-icon name="person"></ion-icon></ion-button>
-    </ion-buttons>
-    -->
     <ion-title>ICHIRAKU</ion-title>
   </ion-toolbar>
 
@@ -19,17 +13,22 @@
   </ion-header>
 
   <!-- TEMPORAL -->
-  <img src="https://i.pinimg.com/564x/b7/2a/b5/b72ab5982a2ae32b47aa76ab0b6992d6.jpg" alt="imagen restaurante">
+  <img src="https://res.cloudinary.com/teepublic/image/private/s--ZN8GORTB--/c_fit,g_north_west,h_920,w_671/co_ffffff,e_outline:41/co_ffffff,e_outline:inner_fill:1/co_bbbbbb,e_outline:3:1000/c_mpad,g_center,h_1260,w_1260/b_rgb:eeeeee/c_limit,f_jpg,h_630,q_90,w_630/v1592725899/production/designs/11533453_0.jpg" alt="imagen restaurante">
 
 
   <ion-list>
     <h2>Comentarios</h2>
     <ion-item *ngFor = "let coment of Comentarios">
-      <ion-avatar>
-        <img src="https://img1.freepng.es/20180420/csw/kisspng-computer-icons-silhouette-user-profile-5ada934a1a7c95.1647956315242739941085.jpg" alt="imagen de usuario">
+      
+      <ion-avatar slot = "start"  [routerLink]="['/usuarios/view', coment.id_user]">
+        <img *ngIf="coment.url" [src]="'http://localhost:3000/' + coment.url">
+
       </ion-avatar>
+      
       <ion-label>
+      
         <p>{{coment.username}} </p>
+
         <h3>{{coment.comentario}}</h3>
         <p>puntuacion: {{coment.puntuacion}}</p>
 

@@ -19,10 +19,7 @@ export class HomePage implements OnInit {
 
   Comentarios:any[];
   zonasReparto: any[];
-  Disponibilidad= {
-    'si': 1,
-    'no': 0
-  };
+
 
   ngOnInit() {
   }
@@ -56,12 +53,5 @@ export class HomePage implements OnInit {
     return false;
   }
 
-  EstaDisponible(data:any){
-    console.log(data, this.Disponibilidad);
-    return this.Disponibilidad[data];
-  }
-  Logout(){
-    this.authService.logout();
-  }
 
 }

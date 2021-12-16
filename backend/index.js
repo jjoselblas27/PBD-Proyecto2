@@ -172,7 +172,7 @@ app.get('/comentarios', function(req, res){
     //AGREGAR la imagen de perfil
     var myQuery = " SELECT comentarios.id_comentario, comentarios.id_user, comentarios.puntuacion, "
                   + " comentarios.comentario, comentarios.modified_date, "
-                  + " usuarios.id_user, usuarios.username "
+                  + " usuarios.id_user, usuarios.username, usuarios.url"
                   + " FROM comentarios, usuarios "
                   + " WHERE usuarios.id_user = comentarios.id_user";
     var myValues = [];

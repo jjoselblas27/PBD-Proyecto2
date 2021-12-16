@@ -94,9 +94,11 @@ INSERT INTO usuarios(id_user, username, password, correo, telefono, url,  create
 VALUES (2,'JOSE', MD5('54321'), 'jose@sesd.com', 987564354, 'figures/1639570407448.png', NOW(), NOW());
 
 INSERT INTO comentarios(id_comentario, id_user, puntuacion, comentario, modified_date, created_date)
-VALUES (1,1,5,"maso el restaurante :V", NOW(), NOW());
+VALUES (1,1,5,"Buen restaurante para cenar en familia", NOW(), NOW());
 INSERT INTO comentarios(id_comentario, id_user, puntuacion, comentario, modified_date, created_date)
-VALUES (2,2,3,"a nada :|", NOW(), NOW());
+VALUES (2,2,3,"Muy buena pagina", NOW(), NOW());
+INSERT INTO comentarios(id_comentario, id_user, puntuacion, comentario, modified_date, created_date)
+VALUES (2,2,3,"Muy recomendada la aplicacion", NOW(), NOW());
 
 insert into menu values(1, 'California Roll', 'Maki', '25', '2019-09-14', '2020-08-15');
 insert into menu values(2, 'Acevichado', 'Maki', '28' , '2020-07-14', '2020-09-15');
