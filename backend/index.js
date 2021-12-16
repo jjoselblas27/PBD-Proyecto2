@@ -582,7 +582,7 @@ app.post('/figures', function(req, res){
   fs.writeFile(`${picture_url}`, req.body.picture, 'base64', function(error) {
     if (error) throw error;
 
-    res.send({picture_url: picture_url});
+    res.send({url: picture_url});
   })
 });
 

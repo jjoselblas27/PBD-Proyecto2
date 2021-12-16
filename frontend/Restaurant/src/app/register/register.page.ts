@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { UsersService } from '../_service/users.service';
 import { AuthService } from 'src/app/_service/auth.service';
 import { PhotoService } from 'src/app/_service/photo.service';
+import { LocalNotifications } from '@capacitor/local-notifications';
+
 
 @Component({
   selector: 'app-register',
@@ -38,6 +40,20 @@ export class RegisterPage implements OnInit {
       response => {
         console.log(response);
         this.router.navigate(['']);
+
+        LocalNotifications.schedule({
+          notifications: [
+            {
+              id: new Date().getTime(),
+              title: "Usuario creado",
+              body: `${values.username} es un nuevo cliente.`,
+              schedule: {
+                at: new Date(new Date().getTime() + 10000)
+              }
+            }
+          ]
+        })
+
       },
       error => {
         console.error(error);
