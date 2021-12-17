@@ -67,8 +67,7 @@ Ante la situacion de pandemia y posterior medidas de prevencion, nuestro restaur
 | Angular Route | Backend URLs | Funcionalidad |
 | --- | --- | --- |
 | `/` | `GET / comentarios` | mostrar la vista principal junto con comentarios de los usuarios |  
-| `/login` | `POST /login` | Realizar login
-				Hola| 
+| `/login` | `POST /login` `Yara` | Realizar login Hola| 
 | `/register` | `POST /register` | Crear un nuevo usuario | 
 | `/home/compra` | `GET / menu ` | mostrara el menu | 
 | `/comentarios_new` | ` POST / Comentarios_new` | agregar un nuevo comentario |
