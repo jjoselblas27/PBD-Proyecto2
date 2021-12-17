@@ -66,7 +66,7 @@ Ante la situacion de pandemia y posterior medidas de prevencion, nuestro restaur
 
 | Angular Route | Backend URLs | Funcionalidad |
 | --- | --- | --- |
-| `/` | `GET / comentarios` | mostrar la vista principal junto con comentarios de los usuarios | 
+| `/home` | `GET / comentarios` | mostrar la vista principal junto con comentarios de los usuarios | 
 |     | `GET /zonas_repartos` | mostrar la vista principal junto con las zonas de repartos disponibles|
 |     | `POST / reservaciones` | mostrar dentro de la vista principal la opción para reservar un lugar en el restaurante |  
 |     | ` DELETE / Comentarios` | elimina un comentario | 
