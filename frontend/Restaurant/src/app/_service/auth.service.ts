@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-  id_user:any; 
+  id_user: any; 
   constructor(
     private http: HttpClient
   ) { }

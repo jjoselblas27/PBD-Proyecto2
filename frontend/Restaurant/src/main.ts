@@ -6,7 +6,8 @@ import { environment } from './environments/environment';
 
 import { LocalNotifications } from '@capacitor/local-notifications';
 
-LocalNotifications.requestPermissions()
+import { defineCustomElements} from '@ionic/pwa-elements/loader';
+
 
 if (environment.production) {
   enableProdMode();
@@ -14,3 +15,6 @@ if (environment.production) {
 
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.log(err));
+
+defineCustomElements(window);
+LocalNotifications.requestPermissions()

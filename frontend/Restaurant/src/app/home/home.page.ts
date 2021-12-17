@@ -10,7 +10,6 @@ import { UsersService } from '../_service/users.service';
 })
 export class HomePage implements OnInit {
 
-  
   constructor(
     private usersService: UsersService,
     public authService: AuthService,
@@ -53,11 +52,6 @@ export class HomePage implements OnInit {
     }
     return false;
   }
-  getId(){
-    return  this.authService.id_user;
-  }
-  Logout(){
-    this.authService.logout();
-  }
+
 
 }

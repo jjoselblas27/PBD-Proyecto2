@@ -28,8 +28,21 @@ export class UsersService {
     return this.http.post<any>('http://localhost:3000/comentarios',newComent);
   }
 
+  addReservaciones(reservacion : any){
+    return this.http.post<any>('http://localhost:3000/reservaciones',reservacion);
+  }
   
   getZonasReparto(){
     return this.http.get<any>('http://localhost:3000/zonas_reparto');
   }
+  
+  getUsuarioById(id_user: any) {
+    return this.http.get<any>(`http://localhost:3000/usuarios/${id_user}`);
+  }
+
+  getUsuarios() {
+    return this.http.get<any>('http://localhost:3000/usuarios');
+  }  
+  
+
 }

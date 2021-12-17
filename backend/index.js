@@ -1,10 +1,13 @@
 const mysql = require('mysql');
 const express = require('express');
 
+var fs = require('fs');
+
+var picturesDirectory = 'figures/';
 
 var app = express();
 
-app.use(express.json());
+app.use(express.json({limit: '50mb'}));
 var cors = require('cors');
 
 app.use(cors());
@@ -34,40 +37,6 @@ app.post('/login', function(req, res){
 });
 
 
-/*
-//Get usuarios: id, nombre, imagen de perfil, 
-//MOTIVO: solo quiero para los comentarios los usuarios que comentaron no los demas por ese motivo
-//Se le enviara por el body los id's de los usuarios para que sean menos busquedas.
-//Problema: como seleccionar un rango de elementos?
-app.get('/usuarios', function(req,res){
-  var connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'cliente',
-    password: '123456789',
-    database: 'restaurant'
-  });
-  connection.connect();
-
-  myQuery = "SELECT id_user, username, imagen_perfil " +
-            "FROM usuarios " +
-            " WHERE 1 = 1 ";
-  var myValues = [];
-  //No se exactamente cuantos elementos seran.
-  if(req.body.id_user1){
-    myQuery += "OR id_user = ? ";
-    myValues.append(req.body.id_user1);
-  }
-  if(req.body.id_user1){
-    myQuery += "OR id_user = ? ";
-    myValues.append(req.body.id_user1);
-  }
-  connection.query(myQuery,myValues, function(error, results, fields){
-    if(error) throw error;
-    res.send(results);
-    connection.end();
-  })
-})
-*/
 //registro de nuevos usuarios
 app.post('/register', function(req, res){
   // Step 0: Definir la conexion a la BD
@@ -82,10 +51,10 @@ app.post('/register', function(req, res){
   connection.connect();
 
   // Step 2: Mandar el query
-  var myQuery = " INSERT INTO usuarios (username, password, correo, telefono, modified_date, created_date) " +
-                " VALUES (?, MD5(?), ?, ?, NOW(), NOW()) ";
+  var myQuery = " INSERT INTO usuarios (username, password, correo, telefono, url, modified_date, created_date) " +
+                " VALUES (?, MD5(?), ?, ?, ?, NOW(), NOW()) ";
   
-  var myValues = [req.body.username, req.body.password, req.body.correo, req.body.telefono ];
+  var myValues = [req.body.username, req.body.password, req.body.correo, req.body.telefono, req.body.url ];
   
   connection.query(myQuery, myValues, function(error, results, fields){
     // Ya tengo el resultado del query en `results`. Si hay algun error, llegará en `error`
@@ -98,58 +67,66 @@ app.post('/register', function(req, res){
     connection.end();
   });
 });
+
+
 
 
 //Update Datos del Usuario
 app.put('/usuario/:id_user', function(req, res){
-//Step 0: Definir la conexion a la BD
-var connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'cliente',
-  password: '123456789',
-  database: 'restaurant'
-});
-
-// Step 1: Establecer la conexion
-connection.connect();
-// Step 2: Mandar el query
-  var myQuery = " UPDATE usuarios SET modified_date = NOW() ";
-  var myValues = [ ];
-  
-  if (req.body.username){
-    myQuery += " , username = ? ";
-    myValues.push(req.body.username);
-  }
-
-  if (req.body.password){
-    myQuery += " , password = MD5(?) ";
-    myValues.push(req.body.password);
-  }
-
-  if (req.body.correo){
-    myQuery += " , correo = ? ";
-    myValues.push(req.body.correo);
-  }
-
-  if (req.body.phone){
-    myQuery += " , telefono = ? ";
-    myValues.push(req.body.phone);
-  }
-
-  myQuery += " WHERE id_user = ? "
-  myValues.push(req.params.id_user);
-
-  connection.query(myQuery, myValues, function(error, results, fields){
-    // Ya tengo el resultado del query en `results`. Si hay algun error, llegará en `error`
-    if (error) throw error;
-    
-    // Step 3: Procesar el resultado de la BD
-    res.send(results);
-
-    // Step 4: Cerrar la conexion
-    connection.end();
+  //Step 0: Definir la conexion a la BD
+  var connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'cliente',
+    password: '123456789',
+    database: 'restaurant'
   });
-});
+  
+  // Step 1: Establecer la conexion
+  connection.connect();
+  // Step 2: Mandar el query
+    var myQuery = " UPDATE usuarios SET modified_date = NOW() ";
+    var myValues = [ ];
+    
+    if (req.body.username){
+      myQuery += " , username = ? ";
+      myValues.push(req.body.username);
+    }
+  
+    if (req.body.password){
+      myQuery += " , password = MD5(?) ";
+      myValues.push(req.body.password);
+    }
+  
+    if (req.body.correo){
+      myQuery += " , correo = ? ";
+      myValues.push(req.body.correo);
+    }
+  
+    if (req.body.telefono){
+      myQuery += " , telefono = ? ";
+      myValues.push(req.body.telefono);
+    }
+  
+    if (req.body.url){
+      myQuery += " , url = ? ";
+      myValues.push(req.body.url);
+    }
+  
+  
+    myQuery += " WHERE id_user = ? "
+    myValues.push(req.params.id_user);
+  
+    connection.query(myQuery, myValues, function(error, results, fields){
+      // Ya tengo el resultado del query en `results`. Si hay algun error, llegará en `error`
+      if (error) throw error;
+      
+      // Step 3: Procesar el resultado de la BD
+      res.send(results);
+  
+      // Step 4: Cerrar la conexion
+      connection.end();
+    });
+  });
 
 //Obtencion de los usuarios.
 
@@ -192,7 +169,12 @@ app.get('/comentarios', function(req, res){
 
     connection.connect();
 
-    var myQuery = " SELECT id_comentario, id_user, puntuacion, comentario, modified_date, created_date FROM comentarios";
+    //AGREGAR la imagen de perfil
+    var myQuery = " SELECT comentarios.id_comentario, comentarios.id_user, comentarios.puntuacion, "
+                  + " comentarios.comentario, comentarios.modified_date, "
+                  + " usuarios.id_user, usuarios.username, usuarios.url"
+                  + " FROM comentarios, usuarios "
+                  + " WHERE usuarios.id_user = comentarios.id_user";
     var myValues = [];
 
     connection.query(myQuery, myValues, function(error, results, fields){
@@ -403,7 +385,7 @@ app.post('/pedido_online', function(req, res){
 
 
 //Registro de nueva reserva
-app.post('/reservaciones_new', function(req, res){
+app.post('/reservaciones', function(req, res){
   // Step 0: Definir la conexion a la BD
   var connection = mysql.createConnection({
      host: 'localhost',
@@ -416,12 +398,12 @@ app.post('/reservaciones_new', function(req, res){
  connection.connect();
 
  // ;Step 2: Mandar el query
- var myQuery =   " INSERT INTO reservaciones (nombre, " +
+ var myQuery =   " INSERT INTO reservaciones (id_user,nombre, " +
                  " n_personas, tipo_mesa, hora_reservacion, fecha, correo," +
                  " telefono, created_date, modified_date ) " +
-                 " VALUES (?,?,?,?,?,?,?, NOW(), NOW()); ";
+                 " VALUES (?,?,?,?,?,?,?,?, NOW(), NOW()); ";
 
- var myValues = [req.body.nombre, req.body.n_personas, req.body.tipo_mesa, req.body.hora_reservacion, req.body.fecha, req.body.correo, req.body.telefono];
+ var myValues = [req.body.id_user,req.body.nombre, req.body.n_personas, req.body.tipo_mesa, req.body.hora_reservacion, req.body.fecha, req.body.correo, req.body.telefono];
 
  connection.query(myQuery, myValues, function(error, results, fields){
      // Ya tengo el resultado del query en `results`. Si hay algun error, llegará en `error`
@@ -437,7 +419,7 @@ app.post('/reservaciones_new', function(req, res){
 
 
 //DELETE reserva
-app.delete('/reserva/:id_user', function(req,res){
+app.delete('/reservaciones/:id_user', function(req,res){
   // Step 0: Definir la conexion a la BD
   var connection = mysql.createConnection({
     host: 'localhost',
@@ -546,6 +528,65 @@ app.put('/menu/:plato_id', function(req, res){
         });
       });
 
+app.get('/usuarios', function(req,res){
+  var connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'cliente',
+    password: '123456789',
+    database: 'restaurant'
+  });
+  connection.connect();
+
+  myQuery = " SELECT id_user, username, password, correo, telefono,url, created_date, modified_date FROM usuarios WHERE 1 = 1 ";
+  var myValues = [];
+
+
+
+
+  connection.query(myQuery,myValues, function(error, results, fields){
+    if(error) throw error;
+    res.send(results);
+    connection.end();
+  })
+})
+
+app.get('/usuarios/:id_user', function (req,res){
+  //step 0
+  var connection = mysql.createConnection({
+      host: 'localhost',
+      user: 'cliente',
+      password: '123456789',
+      database: 'restaurant'
+  
+  });
+  // step 1
+  connection.connect();
+
+  // step 2
+  var myQuery = " SELECT id_user, username, password, correo, telefono, url, created_date, modified_date FROM usuarios WHERE id_user = ? ";
+  var myValues = [req.params.id_user];
+
+
+  connection.query(myQuery, myValues, function(error, results, fields){
+      if (error) throw error;
+
+      res.send(results[0]);
+      connection.end();
+  });
+});
+
+app.post('/figures', function(req, res){
+  var fileName = `${new Date().getTime()}.png`;
+  var picture_url = `${picturesDirectory}${fileName}`;
+
+  fs.writeFile(`${picture_url}`, req.body.picture, 'base64', function(error) {
+    if (error) throw error;
+
+    res.send({url: picture_url});
+  })
+});
+
+app.use('/figures', express.static('figures'));
 
 
 

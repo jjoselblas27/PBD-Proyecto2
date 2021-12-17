@@ -7,6 +7,7 @@ CREATE TABLE usuarios(
 	password varchar(255) NOT NULL,
 	correo varchar(255),
 	telefono int,
+	url varchar(255),
     created_date DATETIME NOT NULL,
     modified_date DATETIME NOT NULL,
     PRIMARY KEY(id_user)
@@ -24,6 +25,7 @@ CREATE TABLE menu(
 
 CREATE TABLE reservaciones (
 	id_reservacion int NOT NULL AUTO_INCREMENT,
+	id_user int NOT NULL,
 	nombre varchar(50) NOT NULL,
 	n_personas int NOT NULL,
 	tipo_mesa ENUM('Ventana - Piso1','Ventana - Piso2','Dentro - Piso1','Dentro - Piso2') NOT NULL,
@@ -33,7 +35,8 @@ CREATE TABLE reservaciones (
 	telefono int,
 	created_date datetime,
 	modified_date datetime,
-	PRIMARY KEY (id_reservacion)
+	PRIMARY KEY (id_reservacion),
+	FOREIGN KEY (id_user) REFERENCES usuarios(id_user)
 );
 
 CREATE TABLE pedidos_online(
@@ -85,15 +88,17 @@ CREATE TABLE zonas_reparto(
 
 
 --pruebas--
-INSERT INTO usuarios(id_user, username, password, correo, telefono, created_date, modified_date) 
-VALUES (1,'JUAN', MD5('12345'), NULL, NULL, NOW(), NOW());
-INSERT INTO usuarios(id_user, username, password, correo, telefono, created_date, modified_date) 
-VALUES (2,'JOSE', MD5('54321'), NULL, NULL, NOW(), NOW());
+INSERT INTO usuarios(id_user, username, password, correo, telefono, url,  created_date, modified_date) 
+VALUES (1,'JUAN', MD5('12345'), 'juan@utec.edu.pe', 987664354, 'figures/1639570501577.png', NOW(), NOW());
+INSERT INTO usuarios(id_user, username, password, correo, telefono, url,  created_date, modified_date) 
+VALUES (2,'JOSE', MD5('54321'), 'jose@sesd.com', 987564354, 'figures/1639570407448.png', NOW(), NOW());
 
 INSERT INTO comentarios(id_comentario, id_user, puntuacion, comentario, modified_date, created_date)
-VALUES (1,1,5,"maso el restaurante :V", NOW(), NOW());
+VALUES (1,1,5,"Buen restaurante para cenar en familia", NOW(), NOW());
 INSERT INTO comentarios(id_comentario, id_user, puntuacion, comentario, modified_date, created_date)
-VALUES (2,2,3,"a nada :|", NOW(), NOW());
+VALUES (2,2,3,"Muy buena pagina", NOW(), NOW());
+INSERT INTO comentarios(id_comentario, id_user, puntuacion, comentario, modified_date, created_date)
+VALUES (2,2,3,"Muy recomendada la aplicacion", NOW(), NOW());
 
 insert into menu values(1, 'California Roll', 'Maki', '25', '2019-09-14', '2020-08-15');
 insert into menu values(2, 'Acevichado', 'Maki', '28' , '2020-07-14', '2020-09-15');
@@ -104,15 +109,15 @@ VALUES(5, "Ramen", "Sopa", 20.00, NOW(), NOW());
 INSERT INTO menu(plato_id, name_plato, tipo_plato, price, created_date, modified_date)
 VALUES(6, "Yakitori","brocheta", 40.00, NOW(), NOW());
 
-INSERT INTO zonas_reparto(id_zona, distrito, disponibilidad, modified_Date, created_Date)
+INSERT INTO zonas_reparto(id_zona, distrito, disponibilidad, created_date, modified_date)
 VALUES (1,'Callao','Si',NOW(),NOW());
-INSERT INTO zonas_reparto(id_zona, distrito, disponibilidad, modified_Date, created_Date)
+INSERT INTO zonas_reparto(id_zona, distrito, disponibilidad, created_date, modified_date)
 VALUES (2,'Comas','Si',NOW(),NOW());
-INSERT INTO zonas_reparto(id_zona, distrito, disponibilidad, modified_Date, created_Date)
+INSERT INTO zonas_reparto(id_zona, distrito, disponibilidad, created_date, modified_date)
 VALUES (3, 'Carabayllo','Si',NOW(),NOW());
-INSERT INTO zonas_reparto(id_zona, distrito, disponibilidad, modified_Date, created_Date)
+INSERT INTO zonas_reparto(id_zona, distrito, disponibilidad, created_date, modified_date)
 VALUES (4, 'San Martin de Porres','Si',NOW(),NOW());
-INSERT INTO zonas_reparto(id_zona, distrito, disponibilidad, modified_Date, created_Date)
+INSERT INTO zonas_reparto(id_zona, distrito, disponibilidad, created_date, modified_date)
 VALUES (5, 'Los Olivos','No',NOW(),NOW());
 
 

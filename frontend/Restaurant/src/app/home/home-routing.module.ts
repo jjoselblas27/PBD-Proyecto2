@@ -17,9 +17,10 @@ const routes: Routes = [
     loadChildren: () => import('../comentarios/edit/edit.module').then( m => m.EditPageModule)
   },
   {
-    path: 'login',
-    loadChildren: () => import('../login/login.module').then( m => m.LoginPageModule)
+    path: 'reservaciones/new',
+    loadChildren: () => import('../reservaciones/reservaciones-new/reservaciones-new.module').then( m => m.ReservacionesNewPageModule)
   }
+  
 ];
 
 @NgModule({
