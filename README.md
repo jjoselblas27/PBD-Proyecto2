@@ -100,7 +100,7 @@ Ante la situacion de pandemia y posterior medidas de prevencion, nuestro restaur
 
 `node index.js`
 
-### Frontend
+### Mobile
 
 1. Instalar dependencias
 
@@ -108,4 +108,4 @@ Ante la situacion de pandemia y posterior medidas de prevencion, nuestro restaur
 
 2. Iniciar el proyecto
 
-`ng serve --open`
+`ionic serve`
