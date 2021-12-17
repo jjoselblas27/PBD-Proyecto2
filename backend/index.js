@@ -9,8 +9,6 @@ var cors = require('cors');
 
 app.use(cors());
 
-
-
 //comprobacion
 app.post('/login', function(req, res){
   // Step 0: Definir la conexion a la BD
@@ -34,6 +32,8 @@ app.post('/login', function(req, res){
     connection.end();
   });
 });
+
+
 /*
 //Get usuarios: id, nombre, imagen de perfil, 
 //MOTIVO: solo quiero para los comentarios los usuarios que comentaron no los demas por ese motivo
