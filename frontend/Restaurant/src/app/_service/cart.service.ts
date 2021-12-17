@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
+
 
 export interface Product{
   id: number;
@@ -29,7 +31,8 @@ export class CartService {
   private cartItemCount = new BehaviorSubject(0);
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) { }
 
   
@@ -81,6 +84,10 @@ export class CartService {
         this.cart.splice(index,1);
       }
     }
+  }
+  
+  goback(product){
+    this.router.navigate(['/home']);
   }
 
 }
