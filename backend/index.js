@@ -68,9 +68,6 @@ app.post('/register', function(req, res){
   });
 });
 
-
-
-
 //Update Datos del Usuario
 app.put('/usuario/:id_user', function(req, res){
   //Step 0: Definir la conexion a la BD
@@ -318,8 +315,6 @@ app.get('/zonas_reparto', function(req,res){
 
 })
 
-
-
 //REGISTRO DE RECLAMOS 
 app.post('/reclamos', function(req, res){
   // Step 0: Definir la conexion a la BD
@@ -381,9 +376,6 @@ app.post('/pedido_online', function(req, res){
   });
 });
 
-
-
-
 //Registro de nueva reserva
 app.post('/reservaciones', function(req, res){
   // Step 0: Definir la conexion a la BD
@@ -417,7 +409,6 @@ app.post('/reservaciones', function(req, res){
  });
 });
 
-
 //DELETE reserva
 app.delete('/reservaciones/:id_user', function(req,res){
   // Step 0: Definir la conexion a la BD
@@ -450,9 +441,6 @@ app.delete('/reservaciones/:id_user', function(req,res){
 
 })
 
-
-
-
 // Mostrar todos los platos de la carta con sus precios 
 app.get('/menu', function(req, res){
     var connection = mysql.createConnection({
@@ -478,7 +466,6 @@ app.get('/menu', function(req, res){
         connection.end();
       });
     });
-
 
 // Actualizar datos de los platos 
 app.put('/menu/:plato_id', function(req, res){
@@ -587,8 +574,6 @@ app.post('/figures', function(req, res){
 });
 
 app.use('/figures', express.static('figures'));
-
-
 
 
 app.listen(3000, function(){
