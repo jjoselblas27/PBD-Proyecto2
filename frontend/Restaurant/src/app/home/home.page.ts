@@ -37,7 +37,7 @@ export class HomePage implements OnInit {
     this.usersService.DeleteComentarios(id_comentario).subscribe(
       response =>{
         console.log(response);
-
+        this.router.navigate(['/usuarios']);
         //Problema recargar la pagina manualmente.
       },
       error => {
