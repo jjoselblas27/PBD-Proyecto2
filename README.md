@@ -74,7 +74,7 @@ Ante la situacion de pandemia y posterior medidas de prevencion, nuestro restaur
 | `menu` | `GET / menu ` | mostrara el menu | 
 | `/comentarios/new` | ` POST / Comentarios_new` | agregar un nuevo comentario |
 | `/comentarios/edit` | ` PUT / Comentarios_edit` | edita un nuevo comentario |
-| `/comentarios/id:comentario` | ` DELETE / Comentarios` | elimina un nuevo comentario | 
+| `/comentarios/id:comentario` | ` DELETE / Comentarios` | elimina un comentario | 
 
 ## Instalación
 
